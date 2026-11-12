@@ -63,10 +63,10 @@ jobs:
       - name: Checkout mã nguồn
         uses: actions/checkout@v4
 
-      - name: Cài đặt Node.js 20.x
+      - name: Cài đặt Node.js 22.x
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: npm
 
       - name: Cài đặt dependencies
