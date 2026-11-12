@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
-    "frontend",
-    "backend"
+    "apps/web",
+    "apps/api"
   ],
   "scripts": {
     "dev": "concurrently \"npm run dev --workspace @brewlite/backend\" \"npm run dev --workspace @brewlite/frontend\"",

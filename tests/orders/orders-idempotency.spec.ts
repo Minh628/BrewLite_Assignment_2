@@ -1,11 +1,11 @@
 import { DiscountType, Prisma } from '@prisma/client';
-import { LoyaltyService } from '../../src/loyalty/loyalty.service';
-import { OrderStatusService } from '../../src/orders/order-status.service';
-import { OrdersService } from '../../src/orders/orders.service';
-import { PricingService } from '../../src/pricing/pricing.service';
-import { PrismaService } from '../../src/prisma/prisma.service';
-import { PromotionsService } from '../../src/promotions/promotions.service';
-import { StockService } from '../../src/stock/stock.service';
+import { LoyaltyService } from '../../apps/api/src/loyalty/loyalty.service';
+import { OrderStatusService } from '../../apps/api/src/orders/order-status.service';
+import { OrdersService } from '../../apps/api/src/orders/orders.service';
+import { PricingService } from '../../apps/api/src/pricing/pricing.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
+import { PromotionsService } from '../../apps/api/src/promotions/promotions.service';
+import { StockService } from '../../apps/api/src/stock/stock.service';
 import { findProductsByIds, validOrderBody } from '../orders/order-fixtures';
 
 /**

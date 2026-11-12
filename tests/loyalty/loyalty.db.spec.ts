@@ -1,9 +1,9 @@
 ﻿import { NestFactory } from '@nestjs/core';
 import { OrderStatus } from '@prisma/client';
-import { AppModule } from '../../src/app.module';
-import { LoyaltyService } from '../../src/loyalty/loyalty.service';
-import { OrderStatusService } from '../../src/orders/order-status.service';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { LoyaltyService } from '../../apps/api/src/loyalty/loyalty.service';
+import { OrderStatusService } from '../../apps/api/src/orders/order-status.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 /**
  * Kiểm chứng tích hợp Loyalty ↔ State Machine trên PostgreSQL THẬT.

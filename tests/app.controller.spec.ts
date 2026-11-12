@@ -1,5 +1,5 @@
-import { AppController } from '../src/app.controller';
-import { PrismaService } from '../src/prisma/prisma.service';
+import { AppController } from '../apps/api/src/app.controller';
+import { PrismaService } from '../apps/api/src/prisma/prisma.service';
 import type { Response } from 'express';
 
 describe('AppController', () => {

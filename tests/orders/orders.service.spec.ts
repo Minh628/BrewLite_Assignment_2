@@ -5,14 +5,14 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { DiscountType, OrderStatus, Prisma, Role } from '@prisma/client';
-import { CreateOrderDto } from '../../src/orders/dto/create-order.dto';
-import { OrderStatusService } from '../../src/orders/order-status.service';
-import { formatOrderCode, OrdersService } from '../../src/orders/orders.service';
-import { PricingService } from '../../src/pricing/pricing.service';
-import { PrismaService } from '../../src/prisma/prisma.service';
-import { PromotionsService } from '../../src/promotions/promotions.service';
-import { PROMO_ERROR } from '../../src/promotions/promotion-rules';
-import { StockService } from '../../src/stock/stock.service';
+import { CreateOrderDto } from '../../apps/api/src/orders/dto/create-order.dto';
+import { OrderStatusService } from '../../apps/api/src/orders/order-status.service';
+import { formatOrderCode, OrdersService } from '../../apps/api/src/orders/orders.service';
+import { PricingService } from '../../apps/api/src/pricing/pricing.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
+import { PromotionsService } from '../../apps/api/src/promotions/promotions.service';
+import { PROMO_ERROR } from '../../apps/api/src/promotions/promotion-rules';
+import { StockService } from '../../apps/api/src/stock/stock.service';
 import { EXPECTED_TOTAL, findProductsByIds, validOrderBody } from './order-fixtures';
 
 type Row = Record<string, unknown>;

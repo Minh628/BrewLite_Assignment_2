@@ -1,7 +1,7 @@
 import { Order, OrderStatus } from '@prisma/client';
-import { LoyaltyHooksService } from '../../src/orders/loyalty-hooks.service';
-import { OrderStatusService } from '../../src/orders/order-status.service';
-import { LoyaltyService } from '../../src/loyalty/loyalty.service';
+import { LoyaltyHooksService } from '../../apps/api/src/orders/loyalty-hooks.service';
+import { OrderStatusService } from '../../apps/api/src/orders/order-status.service';
+import { LoyaltyService } from '../../apps/api/src/loyalty/loyalty.service';
 
 /**
  * Nối LoyaltyService vào State Machine (Sub-task 10.4c, Mục 6.1):

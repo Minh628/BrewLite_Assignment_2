@@ -2,9 +2,9 @@ import { ConflictException, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Prisma } from '@prisma/client';
 import bcrypt from 'bcrypt';
-import { AuthService } from '../../src/auth/auth.service';
-import { LocalStrategy } from '../../src/auth/strategies/local.strategy';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AuthService } from '../../apps/api/src/auth/auth.service';
+import { LocalStrategy } from '../../apps/api/src/auth/strategies/local.strategy';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 describe('AuthService', () => {
   let service: AuthService;

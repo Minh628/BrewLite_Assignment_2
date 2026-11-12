@@ -11,8 +11,8 @@
     "test:cov": "jest --coverage",
     "test:e2e": "jest --runInBand \"e2e-spec\"",
     "test:watch": "jest --watch",
-    "lint": "eslint \"{src,test}/**/*.ts\"",
-    "lint:fix": "eslint \"{src,test}/**/*.ts\" --fix",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\"",
     "prisma:generate": "prisma generate",
@@ -63,13 +63,13 @@
     "typescript-eslint": "^8.71.0"
   },
   "jest": {
-    "rootDir": ".",
-    "testRegex": "(src|test)/.*\\.(e2e-)?spec\\.ts$",
+    "rootDir": "../..",
+    "testRegex": "(apps/api/src|tests)/.*\\.(e2e-)?spec\\.ts$",
     "transform": {
       "^.+\\.ts$": [
         "ts-jest",
         {
-          "tsconfig": "tsconfig.spec.json"
+          "tsconfig": "<rootDir>/apps/api/tsconfig.spec.json"
         }
       ]
     },

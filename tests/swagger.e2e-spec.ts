@@ -1,9 +1,9 @@
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { AppModule } from '../src/app.module';
-import { PrismaService } from '../src/prisma/prisma.service';
-import { BEARER_AUTH, setupSwagger } from '../src/swagger';
+import { AppModule } from '../apps/api/src/app.module';
+import { PrismaService } from '../apps/api/src/prisma/prisma.service';
+import { BEARER_AUTH, setupSwagger } from '../apps/api/src/swagger';
 
 describe('Swagger /api-docs (PB-16 / Sub-task 16.1)', () => {
   let app: INestApplication;

@@ -1,4 +1,4 @@
-import { LoyaltyService, pointsForTotal } from '../../src/loyalty/loyalty.service';
+import { LoyaltyService, pointsForTotal } from '../../apps/api/src/loyalty/loyalty.service';
 
 type FakeOrder = {
   id: number;

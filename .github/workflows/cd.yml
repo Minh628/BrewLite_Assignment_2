@@ -41,7 +41,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: apps/api
     services:
       postgres:
         image: postgres:16-alpine
@@ -98,9 +98,9 @@ jobs:
       matrix:
         include:
           - app: api
-            context: ./backend
+            context: ./apps/api
           - app: web
-            context: ./frontend
+            context: ./apps/web
     steps:
       - name: Checkout mã nguồn
         uses: actions/checkout@v4

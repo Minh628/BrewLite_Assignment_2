@@ -16,9 +16,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
-import { AppModule } from '../../src/app.module';
-import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 const HAS_REAL_DB = !!process.env.DATABASE_URL;
 const STOCK_LIMIT = 5;

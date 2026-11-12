@@ -1,10 +1,14 @@
 {
-  "backend/**/*.{ts,js}": ["eslint --fix --config backend/eslint.config.mjs", "prettier --write"],
-  "backend/**/*.json": ["prettier --write"],
-  "frontend/**/*.{ts,tsx,js,jsx}": [
-    "eslint --fix --config frontend/eslint.config.mjs",
+  "apps/api/**/*.{ts,js}": [
+    "eslint --fix --config apps/api/eslint.config.mjs",
     "prettier --write"
   ],
-  "frontend/**/*.{json,css}": ["prettier --write"],
+  "apps/api/**/*.json": ["prettier --write"],
+  "apps/web/**/*.{ts,tsx,js,jsx}": [
+    "eslint --fix --config apps/web/eslint.config.mjs",
+    "prettier --write"
+  ],
+  "apps/web/**/*.{json,css}": ["prettier --write"],
+  "tests/**/*.{ts,js}": ["eslint --fix --config apps/api/eslint.config.mjs", "prettier --write"],
   "*.{json,md,yml,yaml}": ["prettier --write"]
 }

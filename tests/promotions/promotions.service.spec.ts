@@ -1,7 +1,7 @@
 import { DiscountType, Prisma } from '@prisma/client';
-import { PROMO_ERROR } from '../../src/promotions/promotion-rules';
-import { PromotionsService } from '../../src/promotions/promotions.service';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { PROMO_ERROR } from '../../apps/api/src/promotions/promotion-rules';
+import { PromotionsService } from '../../apps/api/src/promotions/promotions.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 const NOW = new Date('2026-11-02T10:00:00Z');
 

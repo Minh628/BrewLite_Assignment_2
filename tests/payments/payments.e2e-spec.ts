@@ -3,10 +3,10 @@ import { JwtService } from '@nestjs/jwt';
 import { OrderStatus, PaymentMethod } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { AppModule } from '../../src/app.module';
-import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter';
-import { MockPaymentGateway } from '../../src/payments/mock-payment.gateway';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
+import { MockPaymentGateway } from '../../apps/api/src/payments/mock-payment.gateway';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 describe('Payments API (e2e)', () => {
   let app: INestApplication;

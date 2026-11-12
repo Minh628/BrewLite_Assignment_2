@@ -2,9 +2,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import helmet from 'helmet';
 import request from 'supertest';
-import { AppModule } from '../src/app.module';
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
-import { PrismaService } from '../src/prisma/prisma.service';
+import { AppModule } from '../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../apps/api/src/common/filters/http-exception.filter';
+import { PrismaService } from '../apps/api/src/prisma/prisma.service';
 
 /**
  * Test suite kiểm thử toàn diện các tính năng bảo mật (Security & Anti-tampering):

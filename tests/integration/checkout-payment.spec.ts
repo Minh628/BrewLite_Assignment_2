@@ -4,9 +4,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrderStatus, PaymentMethod, PaymentStatus, Size } from '@prisma/client';
 import request from 'supertest';
-import { AppModule } from '../../backend/src/app.module';
-import { HttpExceptionFilter } from '../../backend/src/common/filters/http-exception.filter';
-import { PrismaService } from '../../backend/src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 describe('T5.2-b: Checkout & Payment Integration Tests', () => {
   let app: INestApplication;

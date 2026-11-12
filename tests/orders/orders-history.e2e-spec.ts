@@ -4,10 +4,10 @@ import { JwtService } from '@nestjs/jwt';
 import { OrderStatus, Role } from '@prisma/client';
 import { Test, TestingModule } from '@nestjs/testing';
 import request from 'supertest';
-import { AppModule } from '../../src/app.module';
-import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter';
-import { OrdersService } from '../../src/orders/orders.service';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
+import { OrdersService } from '../../apps/api/src/orders/orders.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 /**
  * Test Task 9.2: GET /orders/me, GET /orders/:id,

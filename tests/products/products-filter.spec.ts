@@ -1,6 +1,6 @@
-import { PrismaService } from '../../src/prisma/prisma.service';
-import { ProductsService } from '../../src/products/products.service';
-import { matchesSearch, normalizeSearchText } from '../../src/products/search-text';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
+import { ProductsService } from '../../apps/api/src/products/products.service';
+import { matchesSearch, normalizeSearchText } from '../../apps/api/src/products/search-text';
 
 const menu = [
   { id: 1, name: 'Cà phê sữa đá', category: { id: 1, name: 'Cà phê' } },

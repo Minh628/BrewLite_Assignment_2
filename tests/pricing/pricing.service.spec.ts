@@ -1,6 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { PrismaService } from '../../src/prisma/prisma.service';
-import { calcUnitPrice, PricingService } from '../../src/pricing/pricing.service';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
+import { calcUnitPrice, PricingService } from '../../apps/api/src/pricing/pricing.service';
 
 describe('PricingService & calcUnitPrice (PB-21 / Sub-task 21.1)', () => {
   // =========================================================================

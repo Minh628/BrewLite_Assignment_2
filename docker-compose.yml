@@ -30,7 +30,7 @@ services:
         condition: service_healthy
 
   backend:
-    build: ./backend
+    build: ./apps/api
     environment:
       DATABASE_URL: postgresql://brewlite:brewlite@postgres:5432/brewlite?schema=public
       JWT_SECRET: ${JWT_SECRET:-change-this-in-development}
@@ -48,7 +48,7 @@ services:
       start_period: 30s
 
   frontend:
-    build: ./frontend
+    build: ./apps/web
     environment:
       NEXT_PUBLIC_API_URL: http://localhost:3001
     ports:

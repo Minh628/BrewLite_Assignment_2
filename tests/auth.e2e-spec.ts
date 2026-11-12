@@ -3,9 +3,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import bcrypt from 'bcrypt';
 import request from 'supertest';
-import { AppModule } from '../src/app.module';
-import { HttpExceptionFilter } from '../src/common/filters/http-exception.filter';
-import { PrismaService } from '../src/prisma/prisma.service';
+import { AppModule } from '../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../apps/api/src/common/filters/http-exception.filter';
+import { PrismaService } from '../apps/api/src/prisma/prisma.service';
 
 describe('Auth API (e2e)', () => {
   let app: INestApplication;

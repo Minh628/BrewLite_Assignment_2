@@ -2,9 +2,9 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { performance } from 'node:perf_hooks';
 import request from 'supertest';
-import { AppModule } from '../../src/app.module';
-import { HttpExceptionFilter } from '../../src/common/filters/http-exception.filter';
-import { PrismaService } from '../../src/prisma/prisma.service';
+import { AppModule } from '../../apps/api/src/app.module';
+import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
+import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
 describe('Products API (e2e)', () => {
   const product = {
