@@ -73,7 +73,7 @@ describe('Prisma Schema & Migration Constraints Verification', () => {
   describe('3. Ràng buộc chỉ mục & PostgreSQL CHECK Constraints trong Migration SQL', () => {
     const migrationPath = path.resolve(
       __dirname,
-      '../../prisma/migrations/20261109120000_add_schema_constraints/migration.sql',
+      '../../apps/api/prisma/migrations/20261109120000_add_schema_constraints/migration.sql',
     );
     const sql = fs.readFileSync(migrationPath, 'utf-8');
 

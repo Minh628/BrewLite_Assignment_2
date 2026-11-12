@@ -8,7 +8,11 @@ import { AppModule } from '../../apps/api/src/app.module';
 import { HttpExceptionFilter } from '../../apps/api/src/common/filters/http-exception.filter';
 import { PrismaService } from '../../apps/api/src/prisma/prisma.service';
 
-describe('T5.2-b: Checkout & Payment Integration Tests', () => {
+// Integration test cần PostgreSQL thật. Tự bỏ qua khi không có DATABASE_URL
+// (chạy local không có DB, hoặc CI chưa mount Postgres service).
+const describeIfDB = process.env.DATABASE_URL ? describe : describe.skip;
+
+describeIfDB('T5.2-b: Checkout & Payment Integration Tests', () => {
   let app: INestApplication;
   let prisma: PrismaService;
   let customerToken: string;
