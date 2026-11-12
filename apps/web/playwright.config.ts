@@ -18,13 +18,13 @@ export default defineConfig({
   webServer: [
     {
       command:
-        'npm --prefix .. exec --workspace @brewlite/backend -- tsc --build --force && npm --prefix .. run dev --workspace @brewlite/backend',
+        'npm --prefix ../.. exec --workspace @brewlite/backend -- tsc --build --force && npm --prefix ../.. run dev --workspace @brewlite/backend',
       url: 'http://localhost:3001/health',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },
     {
-      command: 'npm --prefix .. run dev --workspace @brewlite/frontend',
+      command: 'npm --prefix ../.. run dev --workspace @brewlite/frontend',
       url: 'http://localhost:3000',
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
