@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, ServiceUnavailableException } from '@nestjs/common';
 import { PaymentMethod } from '@prisma/client';
 import * as crypto from 'crypto';
 import * as qs from 'qs';
@@ -22,17 +22,30 @@ export interface VerifyVnpayCallbackResult {
 
 @Injectable()
 export class VnpayService {
-  private readonly tmnCode = process.env.VNP_TMN_CODE ?? 'GPEZRE6S';
-  private readonly hashSecret = process.env.VNP_HASH_SECRET ?? 'YVMGCTHHYQWKKFMIVZKKCHEPXJKLZJOW';
+  // Không có giá trị mặc định cho mã merchant / khóa bí mật: phải cấp qua biến môi trường,
+  // tuyệt đối không hard-code secret trong mã nguồn.
+  private readonly tmnCode = (process.env.VNP_TMN_CODE ?? '').trim();
+  private readonly hashSecret = (process.env.VNP_HASH_SECRET ?? '').trim();
   private readonly vnpUrl =
     process.env.VNP_URL ?? 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html';
   private readonly returnUrl =
     process.env.VNP_RETURN_URL ?? 'http://localhost:3000/orders/vnpay-return';
 
+  /** VNPay chỉ dùng được khi đã cấu hình VNP_TMN_CODE và VNP_HASH_SECRET */
+  isConfigured(): boolean {
+    return this.tmnCode.length > 0 && this.hashSecret.length > 0;
+  }
+
   /**
    * Tạo URL chuyển hướng sang cổng thanh toán VNPay Sandbox theo chuẩn v2.1.0
    */
   createPaymentUrl(params: CreateVnpayUrlParams): string {
+    if (!this.isConfigured()) {
+      throw new ServiceUnavailableException(
+        'Thanh toán VNPay chưa được cấu hình (thiếu VNP_TMN_CODE / VNP_HASH_SECRET)',
+      );
+    }
+
     const now = new Date();
     const createDate = this.formatDateGMT7(now);
     // Hết hạn sau 15 phút theo đặc tả VNPay v2.1.0
@@ -54,7 +67,7 @@ export class VnpayService {
     let vnpParams: Record<string, string | number> = {
       vnp_Version: '2.1.0',
       vnp_Command: 'pay',
-      vnp_TmnCode: this.tmnCode.trim(),
+      vnp_TmnCode: this.tmnCode,
       vnp_Locale: 'vn',
       vnp_CurrCode: 'VND',
       vnp_TxnRef: txnRef,
@@ -72,7 +85,7 @@ export class VnpayService {
     vnpParams = this.sortObject(vnpParams);
 
     const signData = qs.stringify(vnpParams, { encode: false });
-    const hmac = crypto.createHmac('sha512', this.hashSecret.trim());
+    const hmac = crypto.createHmac('sha512', this.hashSecret);
     const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
     vnpParams['vnp_SecureHash'] = signed;
@@ -91,11 +104,15 @@ export class VnpayService {
 
     const sortedParams = this.sortObject(cloneQuery);
     const signData = qs.stringify(sortedParams, { encode: false });
-    const hmac = crypto.createHmac('sha512', this.hashSecret.trim());
+    const hmac = crypto.createHmac('sha512', this.hashSecret);
     const signed = hmac.update(Buffer.from(signData, 'utf-8')).digest('hex');
 
-    // So khớp chữ ký bảo mật (không phân biệt hoa thường)
-    const isValid = secureHash.toLowerCase() === signed.toLowerCase();
+    // So khớp chữ ký bảo mật (không phân biệt hoa thường).
+    // Chưa cấu hình khóa → luôn coi là không hợp lệ (HMAC với khóa rỗng ai cũng giả mạo được).
+    const isValid =
+      this.isConfigured() &&
+      secureHash.length > 0 &&
+      secureHash.toLowerCase() === signed.toLowerCase();
 
     // Bóc tách orderId và method từ chuỗi tham chiếu txnRef dạng {orderId}X{method}X{timestamp}
     const rawTxnRef = String(query['vnp_TxnRef'] || '');

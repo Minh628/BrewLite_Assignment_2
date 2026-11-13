@@ -4,13 +4,13 @@
 
 Luồng nghiệp vụ MVP: **Xem menu → Chọn size/topping → Giỏ hàng → Đặt đơn → Thanh toán → Theo dõi đơn**, kèm màn hình quầy pha chế cho Barista.
 
-| Hạng mục              | Giá trị                                                                                   |
-| --------------------- | ----------------------------------------------------------------------------------------- |
-| **Production (Web)**  | _Chưa deploy — sẽ cập nhật khi có URL (xem [`docs/deployment.md`](./docs/deployment.md))_ |
-| **Production (API)**  | _Chưa deploy — `GET <api>/health` phải trả 200_                                           |
-| **Phiên bản**         | 1.0.0 — xem [`docs/release-notes.md`](./docs/release-notes.md)                            |
-| **Video demo**        | [`docs/demo.md`](./docs/demo.md)                                                          |
-| **Phân công nhóm**    | [`docs/Assignment2-TaskAssignment.md`](./docs/Assignment2-TaskAssignment.md)              |
+| Hạng mục             | Giá trị                                                                                   |
+| -------------------- | ----------------------------------------------------------------------------------------- |
+| **Production (Web)** | _Chưa deploy — sẽ cập nhật khi có URL (xem [`docs/deployment.md`](./docs/deployment.md))_ |
+| **Production (API)** | _Chưa deploy — `GET <api>/health` phải trả 200_                                           |
+| **Phiên bản**        | 1.0.0 — xem [`docs/release-notes.md`](./docs/release-notes.md)                            |
+| **Video demo**       | [`docs/demo.md`](./docs/demo.md)                                                          |
+| **Phân công nhóm**   | [`docs/Assignment2-TaskAssignment.md`](./docs/Assignment2-TaskAssignment.md)              |
 
 ---
 
@@ -47,13 +47,13 @@ Luồng nghiệp vụ MVP: **Xem menu → Chọn size/topping → Giỏ hàng �
 
 ## 2. Công nghệ
 
-| Lớp          | Công nghệ                                                                                                                  |
-| ------------ | -------------------------------------------------------------------------------------------------------------------------- |
-| **Frontend** | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, TanStack Query 5, Zustand 5, React Hook Form + Zod, PWA (`manifest.ts` + `public/sw.js`) |
-| **Backend**  | NestJS 11, Prisma 6, PostgreSQL 16, class-validator, Passport JWT, bcrypt, Helmet, `@nestjs/throttler`, Swagger            |
-| **Thanh toán** | Mock Payment Gateway (thẻ / ví) có `Idempotency-Key`; VNPay Sandbox v2.1.0 (tùy chọn)                                    |
-| **Kiểm thử** | Jest + Supertest (API), Vitest + Testing Library (Web), Playwright (E2E)                                                   |
-| **DevOps**   | npm workspaces (monorepo), Docker / Docker Compose, GitHub Actions (CI + CD → GHCR), Husky + lint-staged, Prettier, ESLint, gitleaks |
+| Lớp            | Công nghệ                                                                                                                                             |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Frontend**   | Next.js 15 (App Router), React 19, TypeScript, Tailwind CSS, TanStack Query 5, Zustand 5, React Hook Form + Zod, PWA (`manifest.ts` + `public/sw.js`) |
+| **Backend**    | NestJS 11, Prisma 6, PostgreSQL 16, class-validator, Passport JWT, bcrypt, Helmet, `@nestjs/throttler`, Swagger                                       |
+| **Thanh toán** | Mock Payment Gateway (thẻ / ví) có `Idempotency-Key`; VNPay Sandbox v2.1.0 (tùy chọn)                                                                 |
+| **Kiểm thử**   | Jest + Supertest (API), Vitest + Testing Library (Web), Playwright (E2E)                                                                              |
+| **DevOps**     | npm workspaces (monorepo), Docker / Docker Compose, GitHub Actions (CI + CD → GHCR), Husky + lint-staged, Prettier, ESLint, gitleaks                  |
 
 Yêu cầu môi trường: **Node.js 22** (CI dùng 22.x), npm 10+, Docker Desktop (khuyến nghị) hoặc PostgreSQL 16 cài sẵn.
 
@@ -100,18 +100,18 @@ BrewLite_Assignment_2/
 
 ## 4. Tài liệu Assignment 2
 
-| Task | Tạo phẩm                                         | Tệp                                                                                                                                                                                                                          |
-| :--: | ------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-|  1   | Bối cảnh & phạm vi, SRS, use-case                | [`context-and-scope.md`](./docs/requirements/context-and-scope.md) · [`srs.md`](./docs/requirements/srs.md) · [`uc-checkout.md`](./docs/requirements/uc-checkout.md) · [`use-case-overview`](./docs/diagrams/use-case-overview.svg) |
-|  1   | Ma trận truy vết                                 | [`traceability-matrix.md`](./docs/traceability-matrix.md)                                                                                                                                                                    |
-|  2   | Activity · Sequence · Class diagram              | [`activity-e2e`](./docs/diagrams/activity-e2e.svg) · [`sequence-checkout`](./docs/diagrams/sequence-checkout.svg) · [`class-domain`](./docs/diagrams/class-domain.svg) (nguồn `.puml` cùng thư mục)                          |
-|  2   | ERD                                              | [`erd_v2.md`](./docs/erd/erd_v2.md) · [`erd.dbml`](./docs/erd/erd.dbml)                                                                                                                                                      |
-|  3   | Kiến trúc + ADR                                  | [`architecture/overview.md`](./docs/architecture/overview.md) · [`adr/`](./docs/architecture/adr/README.md) (001–005)                                                                                                        |
-|  3   | Deployment diagram + hướng dẫn triển khai        | [`deployment.svg`](./docs/diagrams/deployment.svg) · [`deployment.md`](./docs/deployment.md)                                                                                                                                 |
-|  4   | Hợp đồng API, quy ước làm việc                   | [`api-contract.md`](./docs/api-contract.md) · [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md)                                                                                                                                    |
-|  5   | Rollback, release, demo, review, retro           | [`runbook-rollback.md`](./docs/runbook-rollback.md) · [`release-notes.md`](./docs/release-notes.md) · [`demo.md`](./docs/demo.md) · [`demo-script.md`](./docs/demo-script.md) · [`sprint-review.md`](./docs/sprint-review.md) · [`sprint-retro.md`](./docs/sprint-retro.md) |
-|  —   | Bằng chứng NFR                                   | [`perf-report.md`](./docs/perf-report.md) (hiệu năng) · [`a11y-auth.md`](./docs/a11y-auth.md) (accessibility)                                                                                                               |
-|  —   | Backlog & kế hoạch sprint                        | [`BrewLite-ProductBacklog.md`](./docs/BrewLite-ProductBacklog.md) · [`BrewLite-Sprint3.md`](./docs/BrewLite-Sprint3.md) · ảnh UI trong [`docs/ui/`](./docs/ui/)                                                              |
+| Task | Tạo phẩm                                  | Tệp                                                                                                                                                                                                                                                                         |
+| :--: | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|  1   | Bối cảnh & phạm vi, SRS, use-case         | [`context-and-scope.md`](./docs/requirements/context-and-scope.md) · [`srs.md`](./docs/requirements/srs.md) · [`uc-checkout.md`](./docs/requirements/uc-checkout.md) · [`use-case-overview`](./docs/diagrams/use-case-overview.svg)                                         |
+|  1   | Ma trận truy vết                          | [`traceability-matrix.md`](./docs/traceability-matrix.md)                                                                                                                                                                                                                   |
+|  2   | Activity · Sequence · Class diagram       | [`activity-e2e`](./docs/diagrams/activity-e2e.svg) · [`sequence-checkout`](./docs/diagrams/sequence-checkout.svg) · [`class-domain`](./docs/diagrams/class-domain.svg) (nguồn `.puml` cùng thư mục)                                                                         |
+|  2   | ERD                                       | [`erd_v2.md`](./docs/erd/erd_v2.md) · [`erd.dbml`](./docs/erd/erd.dbml)                                                                                                                                                                                                     |
+|  3   | Kiến trúc + ADR                           | [`architecture/overview.md`](./docs/architecture/overview.md) · [`adr/`](./docs/architecture/adr/README.md) (001–005)                                                                                                                                                       |
+|  3   | Deployment diagram + hướng dẫn triển khai | [`deployment.svg`](./docs/diagrams/deployment.svg) · [`deployment.md`](./docs/deployment.md)                                                                                                                                                                                |
+|  4   | Hợp đồng API, quy ước làm việc            | [`api-contract.md`](./docs/api-contract.md) · [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md)                                                                                                                                                                                   |
+|  5   | Rollback, release, demo, review, retro    | [`runbook-rollback.md`](./docs/runbook-rollback.md) · [`release-notes.md`](./docs/release-notes.md) · [`demo.md`](./docs/demo.md) · [`demo-script.md`](./docs/demo-script.md) · [`sprint-review.md`](./docs/sprint-review.md) · [`sprint-retro.md`](./docs/sprint-retro.md) |
+|  —   | Bằng chứng NFR                            | [`perf-report.md`](./docs/perf-report.md) (hiệu năng) · [`a11y-auth.md`](./docs/a11y-auth.md) (accessibility)                                                                                                                                                               |
+|  —   | Backlog & kế hoạch sprint                 | [`BrewLite-ProductBacklog.md`](./docs/BrewLite-ProductBacklog.md) · [`BrewLite-Sprint3.md`](./docs/BrewLite-Sprint3.md) · ảnh UI trong [`docs/ui/`](./docs/ui/)                                                                                                             |
 
 Render lại sơ đồ sau khi sửa `.puml`: `node scripts/render_puml.mjs`.
 
@@ -143,13 +143,13 @@ npm run dev:barista      # Terminal B: web quầy pha chế :3002
 
 > Dùng PostgreSQL cài sẵn thay Docker: bỏ bước 3, sửa `DATABASE_URL` trong `apps/api/.env` cho đúng host/port.
 
-| URL                              | Mục đích                                             |
-| -------------------------------- | ---------------------------------------------------- |
-| http://localhost:3000/menu       | Web khách hàng                                       |
-| http://localhost:3002/barista    | Web quầy pha chế (login tài khoản BARISTA)           |
-| http://localhost:3001/health     | Health check (trạng thái DB + version)               |
-| http://localhost:3001/api-docs   | Swagger UI (OpenAPI JSON: `/api-docs-json`)          |
-| http://localhost:8080            | Adminer — server `postgres`, user/db `brewlite`      |
+| URL                            | Mục đích                                        |
+| ------------------------------ | ----------------------------------------------- |
+| http://localhost:3000/menu     | Web khách hàng                                  |
+| http://localhost:3002/barista  | Web quầy pha chế (login tài khoản BARISTA)      |
+| http://localhost:3001/health   | Health check (trạng thái DB + version)          |
+| http://localhost:3001/api-docs | Swagger UI (OpenAPI JSON: `/api-docs-json`)     |
+| http://localhost:8080          | Adminer — server `postgres`, user/db `brewlite` |
 
 Khách và quầy dùng **cùng codebase Next.js** nhưng chạy 2 instance khác port để `localStorage`/cookie tách riêng — đăng nhập song song 2 tài khoản trong cùng trình duyệt không đụng nhau. Cả hai gọi chung backend `:3001`; quầy polling 10 s, trang theo dõi đơn của khách polling 5 s.
 
@@ -162,12 +162,12 @@ cp .env.example .env
 docker compose up --build     # hoặc: npm run docker:up
 ```
 
-| Service    | Cổng | Ghi chú                                                                     |
-| ---------- | ---- | --------------------------------------------------------------------------- |
-| `postgres` | 5432 | volume `brewlite-postgres`, healthcheck `pg_isready`                        |
-| `adminer`  | 8080 | xem dữ liệu                                                                 |
+| Service    | Cổng | Ghi chú                                                                                                    |
+| ---------- | ---- | ---------------------------------------------------------------------------------------------------------- |
+| `postgres` | 5432 | volume `brewlite-postgres`, healthcheck `pg_isready`                                                       |
+| `adminer`  | 8080 | xem dữ liệu                                                                                                |
 | `backend`  | 3001 | build `./apps/api`; entrypoint tự chạy `prisma migrate deploy` + seed rồi start; healthcheck `GET /health` |
-| `frontend` | 3000 | build `./apps/web`; chờ backend healthy                                     |
+| `frontend` | 3000 | build `./apps/web`; chờ backend healthy                                                                    |
 
 Dừng: `npm run docker:down`.
 
@@ -186,15 +186,15 @@ Tạo bởi `npm run db:seed` (seed idempotent, chạy lại không nhân bản 
 
 **Mock Payment Gateway:**
 
-| Phương thức | Dữ liệu                         | Kết quả                                     |
-| ----------- | ------------------------------- | ------------------------------------------- |
-| Thẻ (CARD)  | `4242 4242 4242 4242`           | Thành công → đơn `PAID`                     |
+| Phương thức | Dữ liệu                         | Kết quả                                          |
+| ----------- | ------------------------------- | ------------------------------------------------ |
+| Thẻ (CARD)  | `4242 4242 4242 4242`           | Thành công → đơn `PAID`                          |
 | Thẻ (CARD)  | `4000 0000 0000 0002`           | Bị từ chối → đơn `PAYMENT_FAILED` (thử lại được) |
-| Thẻ (CARD)  | không đủ 16 chữ số              | `400 Số thẻ không hợp lệ`                   |
-| Ví (WALLET) | mặc định                        | Thành công                                  |
-| Ví (WALLET) | đặt env `MOCK_WALLET_FAIL=true` | Bị từ chối (ví không đủ số dư)              |
+| Thẻ (CARD)  | không đủ 16 chữ số              | `400 Số thẻ không hợp lệ`                        |
+| Ví (WALLET) | mặc định                        | Thành công                                       |
+| Ví (WALLET) | đặt env `MOCK_WALLET_FAIL=true` | Bị từ chối (ví không đủ số dư)                   |
 
-VNPay Sandbox (tùy chọn): cấu hình `VNP_*` trong `apps/api/.env`, thẻ test lấy tại https://sandbox.vnpayment.vn/apis/vnpay-demo.
+VNPay Sandbox (tùy chọn): đăng ký merchant sandbox tại https://sandbox.vnpayment.vn/devreg/, điền `VNP_TMN_CODE` và `VNP_HASH_SECRET` vào `apps/api/.env` (không commit). Để trống thì `POST /payments/vnpay/create-url` trả **503** và mọi callback VNPay bị coi là chữ ký không hợp lệ. Thẻ test: https://sandbox.vnpayment.vn/apis/vnpay-demo.
 
 ## 8. Luồng demo end-to-end
 
@@ -209,15 +209,15 @@ Kịch bản chi tiết (kể cả nhánh lỗi: thẻ bị từ chối, hết h
 
 Tài liệu đầy đủ: Swagger `/api-docs` và [`docs/api-contract.md`](./docs/api-contract.md).
 
-| Quyền                | Endpoint                                                                                     |
-| -------------------- | -------------------------------------------------------------------------------------------- |
-| **Public**           | `GET /health` · `GET /products?category=&q=` · `GET /products/:id` · `GET /categories` · `GET /toppings` |
-|                      | `POST /auth/register` · `POST /auth/login` (giới hạn 5 lần/phút/IP) · `POST /promotions/validate` |
-| **JWT (khách)**      | `GET /auth/me`                                                                               |
-|                      | `POST /orders` (header `Idempotency-Key`) · `GET /orders/me` · `GET /orders/:id` · `POST /orders/:id/cancel` |
-|                      | `POST /payments` (header `Idempotency-Key`) · `POST /payments/vnpay/create-url`              |
-| **JWT BARISTA/ADMIN**| `GET /orders/queue` (đơn PAID/PREPARING/READY, FIFO) · `PATCH /orders/:id/status`            |
-| **Callback / dev**   | `GET /payments/vnpay/ipn` · `GET /payments/vnpay/return` · `POST /payments/simulate` (bị chặn khi `NODE_ENV=production`) |
+| Quyền                 | Endpoint                                                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Public**            | `GET /health` · `GET /products?category=&q=` · `GET /products/:id` · `GET /categories` · `GET /toppings`                 |
+|                       | `POST /auth/register` · `POST /auth/login` (giới hạn 5 lần/phút/IP) · `POST /promotions/validate`                        |
+| **JWT (khách)**       | `GET /auth/me`                                                                                                           |
+|                       | `POST /orders` (header `Idempotency-Key`) · `GET /orders/me` · `GET /orders/:id` · `POST /orders/:id/cancel`             |
+|                       | `POST /payments` (header `Idempotency-Key`) · `POST /payments/vnpay/create-url`                                          |
+| **JWT BARISTA/ADMIN** | `GET /orders/queue` (đơn PAID/PREPARING/READY, FIFO) · `PATCH /orders/:id/status`                                        |
+| **Callback / dev**    | `GET /payments/vnpay/ipn` · `GET /payments/vnpay/return` · `POST /payments/simulate` (bị chặn khi `NODE_ENV=production`) |
 
 **Điểm thiết kế chính** (chi tiết trong [`docs/architecture/overview.md`](./docs/architecture/overview.md)):
 
@@ -243,14 +243,14 @@ Tài liệu đầy đủ: Swagger `/api-docs` và [`docs/api-contract.md`](./doc
 
 ## 10. Kiểm thử
 
-| Loại                              | Vị trí                                                     | Lệnh                                                        |
-| --------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------- |
-| Unit + integration backend        | `apps/api/src/**/*.spec.ts`, `tests/**/*.spec.ts`, `tests/integration/` | `npm run test --workspace @brewlite/backend`  |
-| E2E API (Supertest, cần DB)       | `tests/**/*.e2e-spec.ts`                                   | `npm run test:e2e --workspace @brewlite/backend`            |
-| Coverage backend                  | —                                                          | `npm run test:cov --workspace @brewlite/backend`            |
-| Unit/component frontend (Vitest)  | `apps/web/src/**/*.spec.ts(x)`                             | `npm run test --workspace @brewlite/frontend`               |
-| E2E checkout (Playwright)         | `apps/web/e2e/checkout.spec.ts`                            | `npm run test:e2e --workspace @brewlite/frontend`           |
-| Tất cả unit (2 workspace)         | —                                                          | `npm test`                                                  |
+| Loại                             | Vị trí                                                                  | Lệnh                                              |
+| -------------------------------- | ----------------------------------------------------------------------- | ------------------------------------------------- |
+| Unit + integration backend       | `apps/api/src/**/*.spec.ts`, `tests/**/*.spec.ts`, `tests/integration/` | `npm run test --workspace @brewlite/backend`      |
+| E2E API (Supertest, cần DB)      | `tests/**/*.e2e-spec.ts`                                                | `npm run test:e2e --workspace @brewlite/backend`  |
+| Coverage backend                 | —                                                                       | `npm run test:cov --workspace @brewlite/backend`  |
+| Unit/component frontend (Vitest) | `apps/web/src/**/*.spec.ts(x)`                                          | `npm run test --workspace @brewlite/frontend`     |
+| E2E checkout (Playwright)        | `apps/web/e2e/checkout.spec.ts`                                         | `npm run test:e2e --workspace @brewlite/frontend` |
+| Tất cả unit (2 workspace)        | —                                                                       | `npm test`                                        |
 
 Playwright cần DB đã migrate + seed và Chromium (`npx playwright install chromium`). Test chạy ở viewport mobile **375 × 667**, tự khởi động backend `:3001` và web `:3000`; báo cáo HTML, ảnh và video lưu ở `apps/web/playwright-report/` và `apps/web/test-results/` (CI upload thành artifact, giữ 7 ngày).
 
@@ -258,14 +258,15 @@ Playwright cần DB đã migrate + seed và Chromium (`npx playwright install ch
 
 **CI — [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)** chạy khi push/PR vào `main`, `develop`:
 
-| Job          | Các bước                                                                                                  |
-| ------------ | --------------------------------------------------------------------------------------------------------- |
-| **Backend**  | `npm ci` → `prisma generate` → lint → build → `prisma migrate deploy` (Postgres service) → unit test → e2e test |
-| **Frontend** | `npm ci` → lint → build → migrate + seed DB → cài Chromium → Playwright E2E → upload báo cáo            |
+| Job             | Các bước                                                                                                        |
+| --------------- | --------------------------------------------------------------------------------------------------------------- |
+| **Secret scan** | `gitleaks dir .` với `.gitleaks.toml` — phát hiện secret thì job đỏ                                             |
+| **Backend**     | `npm ci` → `prisma generate` → lint → build → `prisma migrate deploy` (Postgres service) → unit test → e2e test |
+| **Frontend**    | `npm ci` → lint → build → migrate + seed DB → cài Chromium → Playwright E2E → upload báo cáo                    |
 
 Quy ước nhóm: PR vào `main` chỉ merge khi CI xanh và có ít nhất 1 review (branch protection).
 
-**CD — [`.github/workflows/cd.yml`](./.github/workflows/cd.yml)** chạy khi push tag `v*.*.*` hoặc chạy tay (Actions → *BrewLite CD*):
+**CD — [`.github/workflows/cd.yml`](./.github/workflows/cd.yml)** chạy khi push tag `v*.*.*` hoặc chạy tay (Actions → _BrewLite CD_):
 
 ```
 verify (build + test backend) → build & push 2 image lên GHCR → deploy (Render hook) → smoke test GET /health
@@ -288,19 +289,19 @@ git push origin v1.0.0
 
 Không commit giá trị thật — chỉ cập nhật các file `*.env.example`.
 
-| Biến                              | Nơi dùng            | Ví dụ / mặc định                                    | Ghi chú                                                     |
-| --------------------------------- | ------------------- | --------------------------------------------------- | ----------------------------------------------------------- |
-| `DATABASE_URL`                    | API, Prisma         | `postgresql://brewlite:brewlite@localhost:5433/brewlite?schema=public` | Production Neon cần `sslmode=require`         |
-| `JWT_SECRET`                      | API                 | `change-this-in-development`                        | Production: chuỗi ngẫu nhiên ≥ 32 ký tự                     |
-| `PORT`                            | API                 | `3001`                                              |                                                             |
-| `CORS_ORIGIN`                     | API                 | `http://localhost:3000,http://localhost:3002`       | Nhiều origin cách dấu phẩy, không dùng `*`                   |
-| `THROTTLE_TTL` / `THROTTLE_LIMIT` | API                 | `60` / `100`                                        | Rate limit chung; `/auth/login` cố định 5 lần/phút          |
-| `NODE_ENV`                        | API                 | `development`                                       | `production` ẩn stack trace, chặn `/payments/simulate`      |
-| `BUILD_VERSION`                   | API                 | `1.0.0`                                             | Hiển thị ở `/health`                                        |
-| `MOCK_WALLET_FAIL`                | API                 | _(trống)_                                           | `true` → ví luôn bị từ chối                                 |
-| `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_URL`, `VNP_RETURN_URL` | API | xem `apps/api/.env.example`          | Chỉ cần khi dùng VNPay Sandbox                              |
-| `NEXT_PUBLIC_API_URL`             | Web                 | `http://localhost:3001`                             | **Nhúng lúc build** — đổi giá trị phải build lại            |
-| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB` | Docker Compose | `brewlite`                           | File `.env` ở gốc                                           |
+| Biến                                                           | Nơi dùng       | Ví dụ / mặc định                                                       | Ghi chú                                                |
+| -------------------------------------------------------------- | -------------- | ---------------------------------------------------------------------- | ------------------------------------------------------ |
+| `DATABASE_URL`                                                 | API, Prisma    | `postgresql://brewlite:brewlite@localhost:5433/brewlite?schema=public` | Production Neon cần `sslmode=require`                  |
+| `JWT_SECRET`                                                   | API            | `change-this-in-development`                                           | Production: chuỗi ngẫu nhiên ≥ 32 ký tự                |
+| `PORT`                                                         | API            | `3001`                                                                 |                                                        |
+| `CORS_ORIGIN`                                                  | API            | `http://localhost:3000,http://localhost:3002`                          | Nhiều origin cách dấu phẩy, không dùng `*`             |
+| `THROTTLE_TTL` / `THROTTLE_LIMIT`                              | API            | `60` / `100`                                                           | Rate limit chung; `/auth/login` cố định 5 lần/phút     |
+| `NODE_ENV`                                                     | API            | `development`                                                          | `production` ẩn stack trace, chặn `/payments/simulate` |
+| `BUILD_VERSION`                                                | API            | `1.0.0`                                                                | Hiển thị ở `/health`                                   |
+| `MOCK_WALLET_FAIL`                                             | API            | _(trống)_                                                              | `true` → ví luôn bị từ chối                            |
+| `VNP_TMN_CODE`, `VNP_HASH_SECRET`, `VNP_URL`, `VNP_RETURN_URL` | API            | xem `apps/api/.env.example`                                            | Chỉ cần khi dùng VNPay Sandbox                         |
+| `NEXT_PUBLIC_API_URL`                                          | Web            | `http://localhost:3001`                                                | **Nhúng lúc build** — đổi giá trị phải build lại       |
+| `POSTGRES_USER` / `POSTGRES_PASSWORD` / `POSTGRES_DB`          | Docker Compose | `brewlite`                                                             | File `.env` ở gốc                                      |
 
 ## 13. Bảo mật, lỗi & log
 

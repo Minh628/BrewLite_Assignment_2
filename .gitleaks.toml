@@ -17,5 +17,5 @@ paths = [
   '''(^|/)node_modules/''',
   '''package-lock\.json$''',
   '''(^|/)\.gitleaks\.toml$''',
-  '''backend/prisma/seed\.ts$''',
+  '''apps/api/prisma/seed\.ts$''',
 ]

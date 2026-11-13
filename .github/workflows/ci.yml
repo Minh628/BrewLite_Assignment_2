@@ -9,6 +9,28 @@ on:
 
 jobs:
   # ==========================================
+  # 0. Quét secret (gitleaks) — chặn merge nếu phát hiện secret trong mã nguồn
+  #    Quét toàn bộ cây thư mục hiện tại, dùng cấu hình .gitleaks.toml (giống pre-commit hook).
+  # ==========================================
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    env:
+      GITLEAKS_VERSION: 8.21.2
+    steps:
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
+
+      - name: Cài gitleaks
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Quét secret
+        run: gitleaks dir . --config .gitleaks.toml --redact --no-banner --verbose
+
+  # ==========================================
   # 1. Job Backend (NestJS, Prisma, PostgreSQL)
   # ==========================================
   backend:

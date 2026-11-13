@@ -1,11 +1,48 @@
+import { ServiceUnavailableException } from '@nestjs/common';
 import { PaymentMethod } from '@prisma/client';
 import { VnpayService } from './vnpay.service';
 
+// Giá trị giả chỉ dùng cho test — không phải thông tin merchant thật
+const TEST_TMN_CODE = 'TESTTMN1';
+const TEST_HASH_SECRET = 'test-only-hash-secret-not-real';
+
 describe('VnpayService (VNPay Sandbox v2.1.0)', () => {
   let service: VnpayService;
+  const originalEnv = { ...process.env };
 
   beforeEach(() => {
+    process.env.VNP_TMN_CODE = TEST_TMN_CODE;
+    process.env.VNP_HASH_SECRET = TEST_HASH_SECRET;
     service = new VnpayService();
+  });
+
+  afterEach(() => {
+    process.env = { ...originalEnv };
+  });
+
+  describe('khi chưa cấu hình VNP_TMN_CODE / VNP_HASH_SECRET', () => {
+    beforeEach(() => {
+      delete process.env.VNP_TMN_CODE;
+      delete process.env.VNP_HASH_SECRET;
+      service = new VnpayService();
+    });
+
+    it('từ chối tạo URL thanh toán (503)', () => {
+      expect(service.isConfigured()).toBe(false);
+      expect(() =>
+        service.createPaymentUrl({ orderId: 1, amount: 10000, method: PaymentMethod.CARD }),
+      ).toThrow(ServiceUnavailableException);
+    });
+
+    it('luôn coi callback là không hợp lệ, kể cả khi ký bằng khóa rỗng', () => {
+      const verify = service.verifyCallback({
+        vnp_Amount: '100000',
+        vnp_TxnRef: '1XCARDX123',
+        vnp_ResponseCode: '00',
+        vnp_SecureHash: 'anything',
+      });
+      expect(verify.isValid).toBe(false);
+    });
   });
 
   it('tạo URL thanh toán có chữ ký HMAC-SHA512 và tham số đặc tả v2.1.0', () => {
@@ -19,7 +56,7 @@ describe('VnpayService (VNPay Sandbox v2.1.0)', () => {
     expect(url).toContain('https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?');
     expect(url).toContain('vnp_Version=2.1.0');
     expect(url).toContain('vnp_Command=pay');
-    expect(url).toContain('vnp_TmnCode=GPEZRE6S');
+    expect(url).toContain(`vnp_TmnCode=${TEST_TMN_CODE}`);
     expect(url).toContain('vnp_Amount=4500000'); // 45000 * 100
     expect(url).toContain('vnp_TxnRef=1014XCARDX');
     expect(url).toContain('vnp_SecureHash=');
