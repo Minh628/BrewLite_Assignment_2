@@ -1,11 +1,11 @@
 # BrewLite — Kiến trúc hệ thống (Task 3.1)
 
 - **Mã:** T3.1
-- **Phiên bản:** 1.0
-- **Ngày:** 2026-11-05
-- **Người viết:** Hoàng Tịnh (DevOps / Architect)
+- **Phiên bản:** 1.1 — gộp nội dung chi tiết từ bản mô tả kiến trúc v3.0 (Sub-task 31.1) của Kiện Minh (M2)
+- **Ngày:** 2026-11-05 (v1.0) · 2026-11-13 (v1.1)
+- **Người viết:** Hoàng Tịnh (DevOps / Architect) · Kiện Minh (M2) — mục 1.2, 3.6–3.9
 - **Trạng thái:** Draft — chờ nhóm review (hạn 07/11)
-- **Tài liệu liên quan:** `docs/api-contract.md` (v3), `docs/erd/erd_v2.md`, `docs/architecture/adr/README.md` (chỉ mục ADR 001–005), `docs/architecture.md` (bản mô tả chi tiết v3.0 của M2), `docs/deployment.md` (T3.2)
+- **Tài liệu liên quan:** `docs/api-contract.md` (v3), `docs/erd/erd_v2.md`, `docs/architecture/adr/README.md` (chỉ mục ADR 001–005), `docs/deployment.md` (T3.2)
 
 ---
 
@@ -15,9 +15,9 @@ BrewLite là ứng dụng đặt cà phê không tiền mặt, gồm hai ứng d
 
 | Thành phần    | Công nghệ                                                               | Thư mục                                 | Vai trò                                                                    |
 | ------------- | ----------------------------------------------------------------------- | --------------------------------------- | -------------------------------------------------------------------------- |
-| **Web (PWA)** | Next.js 15 (App Router), React 19, TypeScript, TailwindCSS              | `frontend/`                             | Giao diện khách: menu → chi tiết → giỏ → đặt đơn → thanh toán → lịch sử    |
-| **API**       | NestJS 11, TypeScript, Prisma 6, passport-jwt, class-validator, Swagger | `backend/`                              | Toàn bộ nghiệp vụ, xác thực, tính giá, đặt đơn, thanh toán, trạng thái đơn |
-| **Database**  | PostgreSQL 16                                                           | `docker-compose.yml`, `backend/prisma/` | Lưu trữ bền vững, ràng buộc duy nhất, transaction, khóa dòng               |
+| **Web (PWA)** | Next.js 15 (App Router), React 19, TypeScript, TailwindCSS              | `apps/web/`                             | Giao diện khách: menu → chi tiết → giỏ → đặt đơn → thanh toán → lịch sử    |
+| **API**       | NestJS 11, TypeScript, Prisma 6, passport-jwt, class-validator, Swagger | `apps/api/`                              | Toàn bộ nghiệp vụ, xác thực, tính giá, đặt đơn, thanh toán, trạng thái đơn |
+| **Database**  | PostgreSQL 16                                                           | `docker-compose.yml`, `apps/api/prisma/` | Lưu trữ bền vững, ràng buộc duy nhất, transaction, khóa dòng               |
 | **Hạ tầng**   | Docker Compose, GitHub Actions                                          | repo gốc, `.github/workflows/`          | Chạy local một lệnh, CI tự động                                            |
 
 **Nguyên tắc cốt lõi:** _Server là Single Source of Truth cho mọi con số tài chính._ Client có thể tính trước để hiển thị, nhưng giá, giảm giá, tổng tiền, điểm thưởng đều do API tính lại từ DB rồi trả về.
@@ -27,7 +27,7 @@ BrewLite là ứng dụng đặt cà phê không tiền mặt, gồm hai ứng d
 ```
 ┌──────────────────────────── Trình duyệt (mobile-first / PWA) ────────────────────────────┐
 │                                                                                          │
-│  Next.js 15 App Router (frontend/)                                                       │
+│  Next.js 15 App Router (apps/web/)                                                       │
 │  ├─ Server Components: gọi API hoặc SSR lần đầu                                          │
 │  ├─ Client Components: form, giỏ hàng, checkout                                          │
 │  ├─ Zustand stores: auth (persist + cookie mirror), cart (persist local)                 │
@@ -36,7 +36,7 @@ BrewLite là ứng dụng đặt cà phê không tiền mặt, gồm hai ứng d
 └───────────────────────────────────────┬──────────────────────────────────────────────────┘
                                         │ HTTPS · JSON · Bearer JWT
                                         ▼
-┌─────────────────────────────── API NestJS (backend/ :3001) ──────────────────────────────┐
+┌─────────────────────────────── API NestJS (apps/api/ :3001) ─────────────────────────────┐
 │  main.ts                                                                                 │
 │  ├─ helmet()                       bảo mật header                                        │
 │  ├─ enableCors(CORS_ORIGIN)         whitelist origin, cho localhost dev                   │
@@ -67,6 +67,30 @@ BrewLite là ứng dụng đặt cà phê không tiền mặt, gồm hai ứng d
 └──────────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
+### 1.2. Sơ đồ ngữ cảnh (C4 — mức Context)
+
+```mermaid
+C4Context
+    title Sơ đồ ngữ cảnh hệ thống BrewLite (C4 Context)
+
+    Person(customer, "Khách hàng (Customer)", "Đặt đồ uống, áp mã khuyến mãi, thanh toán thẻ/ví, theo dõi đơn.")
+    Person(barista, "Nhân viên pha chế (Barista)", "Nhận đơn đã thanh toán, chuyển PREPARING → READY.")
+    Person(admin, "Quản trị viên (Admin)", "Quản lý danh mục, khuyến mãi, tồn kho, đối soát thanh toán (qua API).")
+
+    System(brewlite, "Hệ thống BrewLite", "Định giá, khuyến mãi, tồn kho đồng thời, state machine, giao dịch idempotent.")
+
+    System_Ext(mockPayment, "Mock Payment Gateway", "Cổng thanh toán giả lập thẻ/ví, dùng Idempotency-Key.")
+    SystemDb_Ext(postgres, "PostgreSQL", "Users, Products, Categories, Toppings, Orders, OrderItems, Payments, Promotions.")
+
+    Rel(customer, brewlite, "Tạo đơn, áp mã, thanh toán", "HTTPS / REST")
+    Rel(barista, brewlite, "Cập nhật trạng thái pha chế", "HTTPS")
+    Rel(admin, brewlite, "Quản trị menu, mã ưu đãi", "HTTPS / API")
+    Rel(brewlite, mockPayment, "Ủy quyền & chốt giao dịch", "Idempotency-Key")
+    Rel(brewlite, postgres, "Đọc/ghi ACID (OCC & row lock)", "Prisma (TCP 5432)")
+```
+
+> Theo phạm vi Sprint 3, Admin **không có UI riêng** — dùng API quầy + Adminer/Prisma Studio (xem `docs/requirements/context-and-scope.md`).
+
 ---
 
 ## 2. Frontend — Next.js PWA
@@ -74,7 +98,7 @@ BrewLite là ứng dụng đặt cà phê không tiền mặt, gồm hai ứng d
 ### 2.1. Cấu trúc thư mục
 
 ```
-frontend/src/
+apps/web/src/
 ├─ app/
 │  ├─ layout.tsx, page.tsx (menu), providers.tsx (React Query + Toast)
 │  ├─ products/[id]/     chi tiết: chọn size/topping/số lượng
@@ -119,7 +143,8 @@ frontend/src/
 | `products`   | `GET /products?category=&q=`, `GET /products/:id`                               | Đọc menu, lọc danh mục, tìm không dấu, cờ hết hàng, chi tiết kèm size/topping | prisma                       |
 | `pricing`    | — (nội bộ)                                                                      | Tính `unitPrice`/`lineTotal`/`subtotal` từ DB, bỏ qua giá client              | prisma                       |
 | `promotions` | `POST /promotions/validate`                                                     | Kiểm tra & tính giảm PERCENT/FIXED; `consumeUsage`/`releaseUsage`             | prisma                       |
-| `orders`     | `POST /orders`, `GET /orders/me`, `GET /orders/:id`, `PATCH /orders/:id/status` | Tạo đơn transaction + idempotency; state machine; hook điểm thưởng            | pricing, promotions, loyalty |
+| `orders`     | `POST /orders`, `GET /orders/me`, `GET /orders/:id`, `PATCH /orders/:id/status` | Tạo đơn transaction + idempotency; `OrderStatusService` (state machine); hook điểm thưởng/tồn kho | pricing, promotions, loyalty, stock |
+| `payments`   | `POST /payments`                                                                | Thanh toán thẻ/ví qua Mock Gateway; `Idempotency-Key` + `requestHash` (mục 3.7) | orders (status), stock       |
 | `loyalty`    | — (hook)                                                                        | `award`/`revoke` điểm, chống cộng đôi                                         | prisma                       |
 | `stock`      | (nội bộ)                                                                        | Trừ/hoàn tồn kho bằng optimistic locking                                      | prisma                       |
 | `common`     | —                                                                               | `HttpExceptionFilter`, `RequestLoggingMiddleware`, DTO lỗi                    | —                            |
@@ -172,7 +197,7 @@ Trường `code` chỉ xuất hiện với lỗi nghiệp vụ (`PROMO_*`, `INVA
 | `THROTTLE_TTL` / `THROTTLE_LIMIT` | `60` / `100`                                                    | ThrottlerModule        |
 | `NEXT_PUBLIC_API_URL`             | `http://localhost:3001`                                         | Frontend               |
 
-`.env.example` ở gốc, `backend/.env.example`, `frontend/.env.example` — **không commit giá trị thật**.
+`.env.example` ở gốc, `apps/api/.env.example`, `apps/web/.env.example` — **không commit giá trị thật**.
 
 ### 3.5. Quan sát & vận hành (Observability)
 
@@ -184,6 +209,140 @@ Trường `code` chỉ xuất hiện với lỗi nghiệp vụ (`PROMO_*`, `INVA
 | API docs     | Swagger `/api-docs` (tag Auth, Products, Orders, Promotions, Health)                  |
 | Hiệu năng    | `scripts/perf/*` + `docs/perf-report.md` (autocannon)                                 |
 
+### 3.6. Phân tầng trong backend (Modular Monolith 3 lớp)
+
+```mermaid
+graph TD
+    subgraph "Tier 1: Presentation"
+        Client[Next.js Client / Mobile Web]
+        Route[NestJS Routing]
+        Pipes[Global ValidationPipe - whitelist & transform]
+        Filters[Global HttpExceptionFilter]
+        Guards[JwtAuthGuard / RolesGuard]
+        Controllers[Controllers: Auth, Products, Orders, Payments, Promotions]
+    end
+
+    subgraph "Tier 2: Business Logic"
+        AuthServ[AuthService: bcrypt salt=10, JWT]
+        ProdServ[ProductsService: catalog, sizes, toppings]
+        PriceServ[PricingService: Single Source of Truth]
+        OrderServ[OrdersService: tạo đơn, snapshot]
+        StatusServ[OrderStatusService: FSM 7 trạng thái, FOR UPDATE, hooks]
+        PayServ[PaymentsService: Idempotency-Key, requestHash, Mock Gateway]
+        PromoServ[PromotionsService: PERCENT/FIXED]
+        StockServ[StockService: OCC qua version]
+    end
+
+    subgraph "Tier 3: Data Access"
+        PrismaServ[PrismaService]
+        TxInteractive[prisma.$transaction]
+        DB[(PostgreSQL 16)]
+    end
+
+    Client -->|HTTP REST + JSON| Route --> Pipes --> Guards --> Controllers
+    Controllers --> AuthServ & ProdServ & OrderServ & PayServ & PromoServ
+    OrderServ --> PriceServ & PromoServ & TxInteractive
+    PayServ --> StatusServ & StockServ & TxInteractive
+    StatusServ -->|FOR UPDATE + cập nhật status| TxInteractive
+    StockServ -->|UPDATE WHERE version = v| TxInteractive
+    TxInteractive --> PrismaServ --> DB
+    Filters -.->|JSON lỗi 4xx/5xx| Client
+```
+
+Nguyên tắc: **Zero Client Trust** — `PricingService` tự đọc giá gốc từ DB, bỏ qua mọi giá client gửi; `OrdersService` lưu snapshot bất biến (`OrderItem`, `OrderItemTopping`) ở trạng thái `PENDING`. Auth: JWT HS256 hạn 1 giờ, 3 vai trò `CUSTOMER` · `BARISTA` · `ADMIN`.
+
+### 3.7. Thanh toán idempotent (`PaymentsModule`)
+
+- Bắt buộc header `Idempotency-Key` (UUID v4); thanh toán `CARD` hoặc `WALLET` qua Mock Gateway.
+- `requestHash = sha256(orderId|method|cardLast4)`:
+  - key trùng + hash khớp → trả kết quả cũ (**200**, replay);
+  - key trùng + hash lệch → **422** (tái sử dụng key cho giao dịch khác);
+  - key mới → xử lý, gọi `OrderStatusService.transition(..., PAID)` trong transaction → **201**.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Client as Next.js Client
+    participant Ctrl as PaymentsController
+    participant Serv as PaymentsService
+    participant StatusServ as OrderStatusService
+    participant DB as PostgreSQL (Prisma tx)
+    participant Gateway as Mock Payment Gateway
+
+    Client->>Ctrl: POST /payments (Idempotency-Key, { orderId, method, cardLast4 })
+    Ctrl->>Serv: processPayment(key, dto)
+    Serv->>Serv: requestHash = sha256(orderId|method|cardLast4)
+    Serv->>DB: payment.findUnique({ idempotencyKey })
+
+    alt Key đã tồn tại
+        alt requestHash khớp
+            Serv-->>Client: 200 OK (kết quả cũ)
+        else requestHash lệch
+            Serv-->>Client: 422 Idempotency-Key đã dùng cho giao dịch khác
+        end
+    else Key mới
+        Serv->>DB: BEGIN ($transaction)
+        Serv->>StatusServ: transition(tx, orderId, PAID)
+        StatusServ->>DB: SELECT ... FROM "Order" WHERE id = :id FOR UPDATE
+        StatusServ->>StatusServ: assertTransition(order.status, PAID)
+        Serv->>Gateway: authorizeAndCharge({ amount, method, cardLast4 })
+        Gateway-->>Serv: SUCCESS / FAILED
+        Serv->>DB: payment.create({ idempotencyKey, orderId, amount, status, requestHash })
+        Serv->>DB: COMMIT
+        Serv-->>Client: 201 Created
+    end
+```
+
+Sơ đồ UML chính thức (PlantUML) của luồng checkout: [`docs/diagrams/sequence-checkout.puml`](../diagrams/sequence-checkout.puml).
+
+### 3.8. Tồn kho đồng thời — Optimistic Concurrency Control (`StockModule`)
+
+Không dùng `FOR UPDATE` trên `Product` để không chặn luồng xem menu:
+
+1. Đọc tự do: `prisma.product.findUnique({ where: { id } })`.
+2. Ghi có điều kiện:
+   ```sql
+   UPDATE "Product"
+   SET "stock" = "stock" - :qty, "version" = "version" + 1
+   WHERE "id" = :productId AND "version" = :currentVersion AND "stock" >= :qty;
+   ```
+3. `affectedRows === 1` → thành công; `0` → có tiến trình khác chen vào hoặc hết hàng → retry có backoff, cuối cùng trả **409**.
+
+### 3.9. State machine đơn hàng (`OrderStatusService`)
+
+`OrderStatusService` là **nơi duy nhất** được cập nhật `Order.status`: khóa dòng `SELECT ... FOR UPDATE` trong transaction, kiểm tra `assertTransition(from, to)`, sai → **409 `INVALID_TRANSITION`**.
+
+```mermaid
+stateDiagram-v2
+    [*] --> PENDING: POST /orders
+    PENDING --> PAID: Thanh toán thành công
+    PENDING --> PAYMENT_FAILED: Gateway từ chối
+    PENDING --> CANCELLED: Khách hủy
+    PAYMENT_FAILED --> PAID: Thử lại thành công
+    PAYMENT_FAILED --> PAYMENT_FAILED: Thử lại thất bại
+    PAYMENT_FAILED --> CANCELLED: Hết hạn / khách hủy
+    PAID --> PREPARING: Barista nhận đơn
+    PAID --> CANCELLED: Quán hủy (hết nguyên liệu)
+    PREPARING --> READY: Pha xong
+    READY --> COMPLETED: Khách nhận món
+    COMPLETED --> [*]
+    CANCELLED --> [*]
+```
+
+| Từ (`from`)        | Đến hợp lệ (`to`)                     | Tác nhân                   | Hook                                                         |
+| ------------------ | ------------------------------------- | -------------------------- | ------------------------------------------------------------ |
+| `PENDING`          | `PAID`, `PAYMENT_FAILED`, `CANCELLED` | Khách / cổng thanh toán    | Vào `PAID`: cộng điểm (`LoyaltyService`)                     |
+| `PAYMENT_FAILED`   | `PAID`, `PAYMENT_FAILED`, `CANCELLED` | Khách / cổng thanh toán    | Vào `PAID`: cộng điểm; ghi nhận lý do thất bại               |
+| `PAID`             | `PREPARING`, `CANCELLED`              | Barista / quản lý          | Vào `CANCELLED`: hoàn kho (`StockService`) + thu hồi điểm    |
+| `PREPARING`        | `READY`                               | Barista                    | —                                                            |
+| `READY`            | `COMPLETED`                           | Khách / nhân viên quầy     | Đóng đơn                                                     |
+| `COMPLETED`        | _(kết thúc)_                          | —                          | Mọi chuyển tiếp → 409                                        |
+| `CANCELLED`        | _(kết thúc)_                          | —                          | Mọi chuyển tiếp → 409                                        |
+
+Toàn bộ 49 cặp (7 × 7) được kiểm thử trong `order-state-machine.spec.ts`. Enum liên quan (`OrderStatus`, `PaymentStatus` = `SUCCEEDED | FAILED | REFUNDED`, `DiscountType` = `PERCENT | FIXED`) và ERD: xem `prisma/schema.prisma` và `docs/erd/erd_v2.md`. Quyết định kiến trúc tương ứng: **ADR-003**.
+
+**Khuyến mãi (`PromotionsModule`):** `PERCENT` (có trần `maxDiscount`) hoặc `FIXED`; điều kiện `isActive`, `startsAt ≤ now ≤ endsAt`, `minOrder`, `usedCount < usageLimit`; tăng `usedCount` nguyên tử bằng `updateMany` có điều kiện.
+
 ---
 
 ## 4. Triển khai (tóm tắt — chi tiết ở T3.2)
@@ -194,8 +353,8 @@ Trường `code` chỉ xuất hiện với lỗi nghiệp vụ (`PROMO_*`, `INVA
 docker compose up --build
 ├─ postgres  :5432   volume brewlite-postgres (bền vững)
 ├─ adminer   :8080   xem dữ liệu
-├─ backend   :3001   build ./backend    depends_on postgres(healthy)
-└─ frontend  :3000   build ./frontend   depends_on backend(healthy)
+├─ backend   :3001   build ./apps/api   depends_on postgres(healthy)
+└─ frontend  :3000   build ./apps/web   depends_on backend(healthy)
 ```
 
 Healthcheck: Postgres `pg_isready` → backend `GET /health` → frontend `GET /`.
@@ -253,18 +412,18 @@ Luồng CD (`.github/workflows/cd.yml`): `tag v*.*.*` → verify → build 2 ima
 
 | Thành phần trong tài liệu           | Mã nguồn                                                                                      |
 | ----------------------------------- | --------------------------------------------------------------------------------------------- |
-| Bootstrap, CORS, Helmet, Validation | `backend/src/main.ts`                                                                         |
-| Module graph                        | `backend/src/app.module.ts`                                                                   |
-| Auth & phân quyền                   | `backend/src/auth/**`                                                                         |
-| Đơn hàng & state machine            | `backend/src/orders/**`                                                                       |
-| Khuyến mãi                          | `backend/src/promotions/**`                                                                   |
-| Điểm thưởng                         | `backend/src/loyalty/**`, `backend/src/orders/loyalty-hooks.service.ts`                       |
-| Tồn kho                             | `backend/src/stock/**`                                                                        |
-| Schema & migration                  | `backend/prisma/schema.prisma`, `backend/prisma/migrations/**`                                |
-| FE routing & guard                  | `frontend/src/middleware.ts`, `frontend/src/app/**`                                           |
-| FE state                            | `frontend/src/store/**`                                                                       |
-| FE API client                       | `frontend/src/lib/api.ts`                                                                     |
-| Hạ tầng                             | `docker-compose.yml`, `backend/Dockerfile`, `frontend/Dockerfile`, `.github/workflows/ci.yml` |
+| Bootstrap, CORS, Helmet, Validation | `apps/api/src/main.ts`                                                                         |
+| Module graph                        | `apps/api/src/app.module.ts`                                                                   |
+| Auth & phân quyền                   | `apps/api/src/auth/**`                                                                         |
+| Đơn hàng & state machine            | `apps/api/src/orders/**`                                                                       |
+| Khuyến mãi                          | `apps/api/src/promotions/**`                                                                   |
+| Điểm thưởng                         | `apps/api/src/loyalty/**`, `apps/api/src/orders/loyalty-hooks.service.ts`                       |
+| Tồn kho                             | `apps/api/src/stock/**`                                                                        |
+| Schema & migration                  | `apps/api/prisma/schema.prisma`, `apps/api/prisma/migrations/**`                                |
+| FE routing & guard                  | `apps/web/src/middleware.ts`, `apps/web/src/app/**`                                           |
+| FE state                            | `apps/web/src/store/**`                                                                       |
+| FE API client                       | `apps/web/src/lib/api.ts`                                                                     |
+| Hạ tầng                             | `docker-compose.yml`, `apps/api/Dockerfile`, `apps/web/Dockerfile`, `.github/workflows/ci.yml` |
 
 ---
 

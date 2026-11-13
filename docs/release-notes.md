@@ -159,7 +159,7 @@ curl -X POST http://localhost:3001/orders \
 ## 6. Tài liệu liên quan
 
 - `docs/api-contract.md` (v3) · Swagger `/api-docs`
-- `docs/architecture.md` (v3) — ADR-003 về State Machine/idempotency (M2)
+- `docs/architecture/overview.md` (gồm phần chi tiết v3 của M2) · ADR-003 về State Machine/idempotency
 - `docs/deployment.md` — biến môi trường, Adminer (M5)
 - `docs/demo-script.md` — kịch bản demo cuối
 - `docs/erd/erd_v2.md` — ERD

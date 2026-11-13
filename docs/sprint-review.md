@@ -78,7 +78,7 @@ Commit tiêu biểu (xem `git log --oneline origin/main`):
 
 | File                                          | Người làm          | Trạng thái                |
 | --------------------------------------------- | ------------------ | ------------------------- |
-| `docs/architecture.md` (v3 + ADR-003)         | Kiện Minh (M2)     | ✅                        |
+| `docs/architecture/overview.md` (v3 + ADR-003) | Kiện Minh (M2)     | ✅                        |
 | `docs/release-notes.md` v1.0.0                | Hoàng Tịnh (M4)    | ✅                        |
 | `docs/api-contract.md` v3                     | ngườitừng viết API | ✅ rolling update         |
 | `docs/demo-script.md`                         | Hoàng Tịnh (M4)    | ✅                        |

@@ -45,10 +45,8 @@ BrewLite/
 ## Tài liệu dự án
 
 - **Đóng góp & quy ước làm việc:** [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md) (branch strategy, Conventional Commits, Definition of Done, PR checklist)
-- **Kiến trúc hệ thống (Architecture):** [`docs/architecture.md`](./docs/architecture.md) (Sơ đồ 3 lớp, ADR-001 đến 005, cấu trúc module)
 - **Kiến trúc tổng quan + chỉ mục ADR:** [`docs/architecture/overview.md`](./docs/architecture/overview.md) · [`docs/architecture/adr/README.md`](./docs/architecture/adr/README.md)
-- **Thiết kế CSDL (ERD):** [`docs/erd/erd.md`](./docs/erd/erd.md)
-- **Quy ước API (API Conventions):** [`docs/api-conventions.md`](./docs/api-conventions.md)
+- **Thiết kế CSDL (ERD):** [`docs/erd/erd_v2.md`](./docs/erd/erd_v2.md) · [`docs/erd/erd.dbml`](./docs/erd/erd.dbml)
 - **Hợp đồng API:** [`docs/api-contract.md`](./docs/api-contract.md)
 - **Sơ đồ UML:** [`docs/diagrams/`](./docs/diagrams/) (Activity, Sequence, Class, **Deployment**)
 - **Triển khai (Deployment):** [`docs/deployment.md`](./docs/deployment.md) (môi trường, biến, thứ tự deploy, rollback)
@@ -103,7 +101,7 @@ Có thể bỏ qua UI quầy bằng cách gọi trực tiếp `PATCH /orders/:id
 - **PB-14 (Sub-task 14.3): CORS, Health Check & Quy ước API**
   - Cấu hình CORS linh hoạt theo biến môi trường `CORS_ORIGIN`, bật credentials và mở các header quan trọng như `Idempotency-Key`.
   - Triển khai endpoint `GET /health` trả về mã HTTP 200 kèm uptime và trạng thái service.
-  - Ban hành tài liệu quy ước API chi tiết tại [`docs/api-conventions.md`](./docs/api-conventions.md).
+  - Quy ước API (header, mã lỗi, Idempotency-Key) hợp nhất vào [`docs/api-contract.md`](./docs/api-contract.md).
 - **PB-22 (Sub-task 22.1 & 22.2): Bảo mật API, Helmet, Rate-limiting & Che giấu Stack Trace**
   - Tích hợp `helmet` tại `main.ts` cấu hình các HTTP security headers tiêu chuẩn (`X-Content-Type-Options`, `X-Frame-Options`,...).
   - Cấu hình `@nestjs/throttler` chống brute-force cho route `POST /auth/login`: tối đa 5 requests/phút (request thứ 6 trả về HTTP 429 Too Many Requests theo tiêu chí AT-22).

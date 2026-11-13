@@ -21,5 +21,4 @@ Assignment 2 gợi ý `001-monorepo`, `002-postgres-vs-sqlite`, `003-jwt-statele
 ## Liên kết
 
 - `docs/architecture/overview.md` — tài liệu kiến trúc chính (T3.1)
-- `docs/architecture.md` — bản mô tả kiến trúc chi tiết v3.0 của M2 (Sprint 3)
 - `docs/deployment.md` — triển khai (T3.2)

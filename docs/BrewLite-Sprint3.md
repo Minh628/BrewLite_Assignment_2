@@ -323,7 +323,7 @@ Ký hiệu: **N1** = T2 02/11, **N2** = T3 03/11 · **[BE]** / **[FE]**.
 
 **3 SP · Bổ sung (Must) · Chịu TN: M2 · mỗi người viết phần của slice mình**
 
-- [ ] **31.1** · `docs/architecture.md` v3: module Payments, Promotions, Stock, OrderStatus; sơ đồ State Machine; **ADR-003** (State Machine tập trung, idempotency bằng khóa dòng + key, optimistic locking) · **M2** · 1h · N2 13:10–14:10
+- [ ] **31.1** · `docs/architecture/overview.md` v3: module Payments, Promotions, Stock, OrderStatus; sơ đồ State Machine; **ADR-003** (State Machine tập trung, idempotency bằng khóa dòng + key, optimistic locking) · **M2** · 1h · N2 13:10–14:10
 - [ ] **31.2** · README bàn giao (chạy bằng 1 lệnh, tài khoản test khách/quầy/admin, thẻ test, mã giảm giá test) + `docs/deployment.md` (biến môi trường, Adminer, sự cố thường gặp) · **M5** · 1,5h · N2 14:30–16:00
 - [x] **31.3** · `docs/release-notes.md` v1.0.0 (tính năng, hạng mục stretch chưa làm, giới hạn đã biết) + `docs/demo-script.md` (Mục 10.1) · **M4** · 1h · N2 16:00–17:00
 - [ ] **31.4** · `docs/api-contract.md` v3 khớp Swagger: người viết API cập nhật ngay trong PR của mình (DoD Mục 13.2)
@@ -567,7 +567,7 @@ GET  /products             -> mỗi sản phẩm thêm "inStock": true|false
 - [ ] **AT-37** (PB-09) · Trang xác nhận; "Đơn của tôi" với user có đơn và user mới · ⇒ Có mã, trạng thái, tổng, "Về trang chủ"; danh sách phân trang; empty state
 - [ ] **AT-38** (10.3) · Mở "Bạc xỉu"; đặt món vừa bị mua hết · ⇒ Nhãn "Hết hàng", nút thêm giỏ tắt; thông báo hết hàng đúng dòng
 - [ ] **AT-39** (PB-09) · Máy chưa có dự án: clone, `cp .env.example .env`, `docker compose up --build` · ⇒ 3 dịch vụ healthy; đặt và thanh toán được; không thao tác thủ công với DB
-- [ ] **AT-40** (PB-31) · Đọc README, architecture v3, deployment, release-notes, demo-script · ⇒ Đủ và khớp sản phẩm; người ngoài nhóm chạy được
+- [ ] **AT-40** (PB-31) · Đọc README, architecture/overview v3, deployment, release-notes, demo-script · ⇒ Đủ và khớp sản phẩm; người ngoài nhóm chạy được
 - [ ] **AT-41** (hồi quy) · Chạy nhanh luồng Sprint 1–2: menu, lọc/tìm, chi tiết, giỏ, đăng ký/đăng nhập (AT-01…AT-28 chọn lọc) · ⇒ Không hồi quy
 
 ---
