@@ -7,6 +7,7 @@ COPY . .
 # Next.js nhúng NEXT_PUBLIC_* vào bundle lúc build → phải truyền bằng ARG
 ARG NEXT_PUBLIC_API_URL=http://localhost:3001
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
+ENV DOCKER_BUILD=true
 
 RUN npm run build
 
