@@ -24,7 +24,7 @@
     "perf:products": "node scripts/perf/products.js",
     "perf:orders": "node scripts/perf/orders.js",
     "demo:record": "npm run test:e2e --workspace @brewlite/frontend -- e2e/demo-recording.spec.ts && node scripts/convert_demo_mp4.mjs",
-    "prepare": "husky"
+    "prepare": "node -e \"if (!process.env.CI && !process.env.VERCEL) { try { require.resolve('husky'); require('child_process').execSync('husky', { stdio: 'inherit' }); } catch {} }\""
   },
   "devDependencies": {
     "autocannon": "^8.0.0",
