@@ -12,47 +12,58 @@
 ## Cấu trúc
 
 ```text
-BrewLite/
-├─ frontend/                  # Next.js UI
-├─ backend/                   # NestJS REST API
-│  ├─ prisma/                 # schema và seed
-│  └─ src/
-│     ├─ auth/                # AuthModule: Đăng ký, đăng nhập & JWT
-│     │  ├─ dto/              # Data Transfer Objects (RegisterDto)
-│     │  ├─ auth.controller.ts
-│     │  ├─ auth.service.ts
-│     │  └─ auth.module.ts
-│     ├─ common/              # Global filters, pipes, interceptors
-│     │  └─ filters/
-│     │     └─ http-exception.filter.ts
-│     ├─ pricing/             # PricingService & logic tính giá
-│     ├─ prisma/              # PrismaService & PrismaModule
-│     ├─ products/            # ProductsModule & catalog API
-│     ├─ app.controller.ts
-│     ├─ app.module.ts
-│     └─ main.ts
-├─ docs/                      # Tài liệu kỹ thuật
-│  ├─ architecture.md         # Kiến trúc 3 lớp, ADR & thiết kế module
-│  ├─ erd/                    # Sơ đồ CSDL, DBML & ERD
-│  └─ ui/                     # Thiết kế giao diện & luồng UI
-├─ docker-compose.yml          # production: PostgreSQL + backend + frontend
-├─ docker-compose.dev.yml      # dev: PostgreSQL 16 với credentials từ Neon.tech
-├─ .env.dev                    # credentials dev (git-ignored)
-├─ package.json                # scripts dùng chung
+BrewLite_Assignment_2/           # npm workspaces monorepo
+├─ apps/
+│  ├─ web/                        # @brewlite/frontend — Next.js 15 (App Router)
+│  │  ├─ e2e/                     # Playwright tests (checkout, demo-recording)
+│  │  ├─ public/                  # static assets + manifest PWA
+│  │  └─ src/
+│  │     ├─ app/                  # routes: /menu, /cart, /checkout, /orders, /barista, /login, /register
+│  │     ├─ components/           # Button, Input, Header, SizeSelector, ToppingSelector, StatusBadge, ...
+│  │     ├─ store/                # Zustand: auth (persist + cookie mirror), cart
+│  │     ├─ lib/                  # api.ts, types.ts, pricing.ts, format.ts, authSchemas.ts
+│  │     └─ middleware.ts         # route guard /checkout
+│  └─ api/                        # @brewlite/backend — NestJS 11
+│     ├─ prisma/                  # schema.prisma, migrations, seed.ts
+│     ├─ docker-entrypoint.sh
+│     └─ src/
+│        ├─ auth/                 # register/login/JWT, JwtAuthGuard, RolesGuard
+│        ├─ common/filters/       # HttpExceptionFilter
+│        ├─ orders/               # OrdersService + OrderStatusService (state machine 7 trạng thái)
+│        ├─ pricing/              # PricingService (server = Single Source of Truth)
+│        ├─ products/, categories/, toppings/
+│        ├─ promotions/           # BREW10 / GIAM15K / HETHAN
+│        ├─ payments/             # MockPaymentGateway + VNPay Sandbox v2.1.0
+│        ├─ loyalty/, stock/      # award/revoke điểm + OCC
+│        ├─ prisma/               # PrismaService global module
+│        └─ app.module.ts, main.ts
+├─ tests/                         # Jest unit & e2e specs (orders, auth, promotions, security, ...)
+├─ docs/                          # SRS, ADR, traceability-matrix, api-contract, deployment, demo ...
+│  ├─ architecture/               # overview.md + adr/001-005
+│  ├─ erd/                        # erd_v2.md + erd.dbml
+│  ├─ requirements/               # srs.md, context-and-scope.md, uc-checkout.md
+│  ├─ diagrams/                   # UML: use-case, activity, sequence, class, deployment
+│  └─ evidence/                   # video demo T5.4 (MP4)
+├─ scripts/                       # perf (autocannon), convert_demo_mp4.mjs
+├─ .github/workflows/ci.yml       # Backend + Frontend CI job
+├─ docker-compose.yml             # prod: PostgreSQL + api + web
+├─ docker-compose.dev.yml         # dev: PostgreSQL 16 + Adminer
+├─ package.json                   # npm workspaces (apps/web, apps/api)
 └─ .env.example
 ```
 
 ## Tài liệu dự án
 
 - **Đóng góp & quy ước làm việc:** [`docs/CONTRIBUTING.md`](./docs/CONTRIBUTING.md) (branch strategy, Conventional Commits, Definition of Done, PR checklist)
-- **Kiến trúc hệ thống (Architecture):** [`docs/architecture.md`](./docs/architecture.md) (Sơ đồ 3 lớp, ADR-001 đến 005, cấu trúc module)
 - **Kiến trúc tổng quan + chỉ mục ADR:** [`docs/architecture/overview.md`](./docs/architecture/overview.md) · [`docs/architecture/adr/README.md`](./docs/architecture/adr/README.md)
-- **Thiết kế CSDL (ERD):** [`docs/erd/erd.md`](./docs/erd/erd.md)
-- **Quy ước API (API Conventions):** [`docs/api-conventions.md`](./docs/api-conventions.md)
+- **SRS & phạm vi:** [`docs/requirements/srs.md`](./docs/requirements/srs.md) · [`docs/requirements/context-and-scope.md`](./docs/requirements/context-and-scope.md) · [`docs/requirements/uc-checkout.md`](./docs/requirements/uc-checkout.md)
+- **Ma trận truy vết:** [`docs/traceability-matrix.md`](./docs/traceability-matrix.md)
+- **Thiết kế CSDL (ERD):** [`docs/erd/erd_v2.md`](./docs/erd/erd_v2.md) · [`docs/erd/erd.dbml`](./docs/erd/erd.dbml)
 - **Hợp đồng API:** [`docs/api-contract.md`](./docs/api-contract.md)
-- **Sơ đồ UML:** [`docs/diagrams/`](./docs/diagrams/) (Activity, Sequence, Class, **Deployment**)
-- **Triển khai (Deployment):** [`docs/deployment.md`](./docs/deployment.md) (môi trường, biến, thứ tự deploy, rollback)
-- **Kịch bản demo & phát hành:** [`docs/demo-script.md`](./docs/demo-script.md) · [`docs/release-notes.md`](./docs/release-notes.md)
+- **Sơ đồ UML:** [`docs/diagrams/`](./docs/diagrams/) (use-case, activity, sequence, class, deployment)
+- **Triển khai (Deployment) & rollback:** [`docs/deployment.md`](./docs/deployment.md) · [`docs/runbook-rollback.md`](./docs/runbook-rollback.md)
+- **Kịch bản demo & phát hành:** [`docs/demo.md`](./docs/demo.md) · [`docs/demo-script.md`](./docs/demo-script.md) · [`docs/release-notes.md`](./docs/release-notes.md)
+- **Video demo T5.4:** [`docs/evidence/`](./docs/evidence/) (desktop + mobile MP4)
 
 ## Giao diện quầy pha chế & tài khoản test
 
@@ -74,6 +85,7 @@ Backend chỉ cần 1 instance — cả 2 FE gọi chung backend ở `:3001`. Đ
 
 | Vai trò  | Email                  | Mật khẩu      |
 | -------- | ---------------------- | ------------- |
+| CUSTOMER | `an@brewlite.vn`       | `matkhau123`  |
 | CUSTOMER | `customer@brewlite.vn` | `Password123` |
 | BARISTA  | `barista@brewlite.vn`  | `matkhau123`  |
 | ADMIN    | `admin@brewlite.vn`    | `matkhau123`  |
@@ -243,7 +255,6 @@ Yêu cầu: Node.js 20+, npm 10+, PostgreSQL 16+ (cài local hoặc chạy bằn
 
 ```bash
 cp .env.example .env
-cp backend/.env.example backend/.env
 npm ci
 # Nếu dùng Docker Desktop thay cho PostgreSQL cài local:
 npm run dev:db        # Postgres :5433 + Adminer :8080
@@ -271,7 +282,7 @@ npx playwright install chromium
 npm run test:e2e --workspace @brewlite/frontend
 ```
 
-Playwright chạy checkout ở viewport mobile 375 × 667, giả lập phản hồi thanh toán thành công qua API nội bộ để không phụ thuộc VNPay Sandbox. Báo cáo HTML, ảnh chụp và video được lưu trong `frontend/playwright-report/` và `frontend/test-results/`. CI cũng chạy E2E và lưu các tệp này thành artifact.
+Playwright chạy checkout ở viewport mobile 375 × 667, giả lập phản hồi thanh toán thành công qua API nội bộ để không phụ thuộc VNPay Sandbox. Báo cáo HTML, ảnh chụp và video được lưu trong `apps/web/playwright-report/` và `apps/web/test-results/`. CI cũng chạy E2E và lưu các tệp này thành artifact.
 
 ## Chạy bằng Docker (dev)
 
