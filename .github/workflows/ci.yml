@@ -16,8 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        # Tự động thực thi mọi lệnh bên trong thư mục backend/
-        working-directory: backend
+        # Tự động thực thi mọi lệnh bên trong thư mục apps/api/
+        working-directory: apps/api
 
     # Khởi tạo Service Container PostgreSQL để phục vụ kiểm thử tích hợp và migration
     services:
@@ -90,8 +90,8 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        # Tự động thực thi mọi lệnh bên trong thư mục frontend/
-        working-directory: frontend
+        # Tự động thực thi mọi lệnh bên trong thư mục apps/web/
+        working-directory: apps/web
 
     services:
       postgres:
@@ -141,9 +141,9 @@ jobs:
 
       - name: Khởi tạo Prisma Client và cơ sở dữ liệu E2E
         run: |
-          npx prisma generate --schema ../backend/prisma/schema.prisma
-          npx prisma migrate deploy --schema ../backend/prisma/schema.prisma
-          npm --prefix .. run prisma:seed --workspace @brewlite/backend
+          npx prisma generate --schema ../../apps/api/prisma/schema.prisma
+          npx prisma migrate deploy --schema ../../apps/api/prisma/schema.prisma
+          npm --prefix ../.. run prisma:seed --workspace @brewlite/backend
 
       - name: Cài Chromium cho Playwright
         run: npx playwright install --with-deps chromium
@@ -159,7 +159,7 @@ jobs:
         with:
           name: playwright-checkout-${{ github.run_id }}
           path: |
-            frontend/playwright-report/
-            frontend/test-results/
+            apps/web/playwright-report/
+            apps/web/test-results/
           if-no-files-found: ignore
           retention-days: 7
