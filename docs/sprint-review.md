@@ -78,7 +78,7 @@ Commit tiêu biểu (xem `git log --oneline origin/main`):
 
 | File                                          | Người làm          | Trạng thái                |
 | --------------------------------------------- | ------------------ | ------------------------- |
-| `docs/architecture/overview.md` (v3 + ADR-003) | Kiện Minh (M2)     | ✅                        |
+| `docs/architecture.md` (v3 + ADR-003)         | Kiện Minh (M2)     | ✅                        |
 | `docs/release-notes.md` v1.0.0                | Hoàng Tịnh (M4)    | ✅                        |
 | `docs/api-contract.md` v3                     | ngườitừng viết API | ✅ rolling update         |
 | `docs/demo-script.md`                         | Hoàng Tịnh (M4)    | ✅                        |
@@ -98,7 +98,7 @@ Commit tiêu biểu (xem `git log --oneline origin/main`):
    - Chọn Cappuccino L + topping Trân châu + Kem cheese (2 ly) + Trà đào M (1 ly).
    - Vào giỏ hàng → tổng 178 000đ.
    - Đăng ký tài khoản mới hoặc login `customer@brewlite.vn` / `Password123`.
-   - Checkout: chọn CARD, nhập `4242 4242 4242 4242`, không dùng mã giảm giá.
+   - Checkout: bấm thanh toán qua **VNPay**, không dùng mã giảm giá.
    - Nhận 201 PENDING → 200 PAID trong < 2 s.
    - Tự chuyển `/orders/{id}` → badge "Đã thanh toán - Mời tới quầy lấy nước".
 
